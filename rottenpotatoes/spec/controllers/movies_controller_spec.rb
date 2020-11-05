@@ -24,13 +24,20 @@ RSpec.describe MoviesController do
     end
   
   describe "GET search_directors" do
-     it "renders the search_directors template" do
-       get :search_directors, :id => 1
-      expect(response).to render_template("search_directors")
-     end
-    it "search_directors happy path" do
+     it "happy path" do
        get :search_directors, :id => 100
       expect(response).to render_template("search_directors")
      end
+    it "sad path" do
+       get :search_directors, :id => 102
+      expect(response).to render_template("search_directors")
+     end
    end
+  
+  describe "GET show" do
+    it "renders the template" do
+      get :show, :id => 1
+      expect(response).to render_template("show")
+    end
+  end
 end

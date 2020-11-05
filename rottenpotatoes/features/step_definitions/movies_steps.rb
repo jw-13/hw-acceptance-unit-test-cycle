@@ -17,9 +17,21 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   end
 end
 
-Then /I should see all the movies/ do
+When /I fill in "(.*)" with "(.*)"/ do |e1, e2|
+  fill_in(e1, :with => e2)
+end
+
+Then /^I should see all the movies$/ do
   # Make sure that all the movies in the app are visible in the table
   Movie.all.each do |movie|
     step %{I should see "#{movie.title}"}
   end
 end
+
+Then /^the director of "(.*)" should be "(.*)"$/ do |arg1, arg2|
+  expect(Movie.find_by_title(arg1).director).to eq(arg2)
+end
+
+# When /I follow "Find Movies With Same Director"/ do
+  # click_button("Find Movies With Same Director")
+# end

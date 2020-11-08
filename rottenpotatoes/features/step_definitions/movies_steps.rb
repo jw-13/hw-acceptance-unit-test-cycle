@@ -32,6 +32,3 @@ Then /^the director of "(.*)" should be "(.*)"$/ do |arg1, arg2|
   expect(Movie.find_by_title(arg1).director).to eq(arg2)
 end
 
-# When /I follow "Find Movies With Same Director"/ do
-  # click_button("Find Movies With Same Director")
-# end

@@ -15,22 +15,23 @@ if RUBY_VERSION>='2.6.0'
   end
 end
 
-RSpec.describe MoviesController do
+RSpec.describe Movie, type: :model do
   
   before do
       @movie100 = Movie.create(:id => 100, :title => "movie100", :director => "blah director")
       @movie101 = Movie.create(:id => 101, :title => "movie101", :director => "blah director")
       @movie102 = Movie.create(:id => 102, :title => "movie102")
-    end
+  end
   
-  describe "GET search_directors" do
-     it "happy path" do
-       get :search_directors, :id => 100
-      expect(response).to render_template("search_directors")
+  describe "find with director (class method)" do
+     it "finds similar movies" do
+       @movies = Movie.find_with_director("blah director")
+       assert_includes(@movies, @movie100)
+       assert_includes(@movies, @movie101)
      end
-    it "sad path" do
-       get :search_directors, :id => 102
-      expect(response).to redirect_to("/movies")
+    it "movie without similar movies" do
+       movies = Movie.find_with_director("blah director")
+       assert (not movies.include? @movie102)
      end
    end
 end
